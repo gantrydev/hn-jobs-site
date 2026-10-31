@@ -57,14 +57,14 @@ export function PostingsList({ raw, classified }: { raw: RawData; classified: Cl
   }, [raw, classified])
 
   const roles = useMemo(() => [...new Set(postings.map((p) => p.tags.role).filter(Boolean) as string[])].sort(), [postings])
-  const techs = useMemo(() => [...new Set(postings.flatMap((p) => p.tags.technologies))].sort(), [postings])
+  const techs = useMemo(() => [...new Set(postings.flatMap((p) => [...p.tags.languages, ...p.tags.technologies]))].sort(), [postings])
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase()
     return postings.filter((p) => {
       if (q && !p.body.toLowerCase().includes(q) && !p.raw.by.toLowerCase().includes(q)) return false
       if (role && p.tags.role !== role) return false
-      if (tech && !(p.tags.technologies as readonly string[]).includes(tech)) return false
+      if (tech && !([...p.tags.languages, ...p.tags.technologies] as readonly string[]).includes(tech)) return false
       if (remote && p.tags.remote !== remote) return false
       return true
     })

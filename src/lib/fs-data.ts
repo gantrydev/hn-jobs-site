@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises"
 import path from "node:path"
+import { ClassifiedDataSchema } from "../../hn-jobs-data/scripts/schemas"
 import type { Analysis, ClassifiedData, History, Manifest, RawData, TrendSeries } from "../../hn-jobs-data/scripts/schemas"
 
 export type { Analysis, ClassifiedData, History, Manifest, RawData, TrendSeries }
@@ -37,8 +38,8 @@ export function loadAnalysis(date: string): Promise<Analysis> {
   return readJSON<Analysis>("runs", date, "analysis.json")
 }
 
-export function loadClassified(date: string): Promise<ClassifiedData> {
-  return readJSON<ClassifiedData>("runs", date, "classified.json")
+export async function loadClassified(date: string): Promise<ClassifiedData> {
+  return ClassifiedDataSchema.parse(await readJSON("runs", date, "classified.json"))
 }
 
 export function loadRaw(date: string): Promise<RawData> {
