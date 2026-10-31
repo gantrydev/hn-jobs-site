@@ -29,8 +29,13 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Pushes to `main` and `data-updated` repository dispatches run CI against the latest
+data. Lint, type checking, the high-severity dependency audit, and the production
+build must pass before the Pages artifact is uploaded. The reusable deployment
+workflow publishes that checked artifact. Pull requests never publish.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+TODO: Clear the remaining moderate [minimatch advisory](https://github.com/advisories/GHSA-g3hv-75wg-m249)
+when ESLint supports its patched major version. The low-severity
+[deepmerge advisory](https://github.com/advisories/GHSA-gcqx-w48m-w2h4) in shadcn has no patched release.
